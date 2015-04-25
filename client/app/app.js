@@ -3,44 +3,36 @@ angular.module('shortly', [
   'shortly.links',
   'shortly.shorten',
   'shortly.auth',
-  'ngRoute'
+  'ui.router'
 ])
-.config(function($routeProvider, $httpProvider) {
-  $routeProvider
-    .when('/signin', {
+.config(function($stateProvider, $httpProvider, $urlRouterProvider) {
+
+  $urlRouterProvider.otherwise("/links");
+
+  $stateProvider
+    .state('signin', {
+      url: '/signin',
       templateUrl: 'app/auth/signin.html',
       controller: 'AuthController'
     })
-    .when('/signup', {
+    .state('signup', {
+      url: '/signup',
       templateUrl: 'app/auth/signup.html',
       controller: 'AuthController'
     })
-    .when('/links', {
+    .state('links', {
+      url: '/links',
       templateUrl: 'app/links/links.html',
       controller: 'LinksController'
     })
-    .when('/shorten', {
+    .state('shorten', {
+      url: '/shorten',
       templateUrl: 'app/shorten/shorten.html',
       controller: 'ShortenController'
     })
-    // .when('/', {
-    //   redirectTo: function(params){
-    //     console.log(params);
-    //     // if ($window.localStorage.get('com.shortly')){
-    //     //   return '/links';
-    //     // } else {
-    //     //   return '/signin';
-    //     // }
-    //   }
-    // })
-    .otherwise({
-      redirectTo: '/links'
-    })
-    // Your code here
 
-    // We add our $httpInterceptor into the array
-    // of interceptors. Think of it like middleware for your ajax calls
-    $httpProvider.interceptors.push('AttachTokens');
+
+  $httpProvider.interceptors.push('AttachTokens');
 })
 .factory('AttachTokens', function ($window) {
   // this is an $httpInterceptor

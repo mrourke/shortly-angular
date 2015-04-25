@@ -9,6 +9,10 @@ angular.module('shortly.links', [])
     });
   };
 
+  $scope.increaseVisits = function(link){
+    link.visits++;
+  };
+
   $scope.init = function() {
     $scope.getLinks();
   }();
@@ -16,7 +20,8 @@ angular.module('shortly.links', [])
 
 .directive('shortenLink', function() {
   return {
-    template: '<a href="/api/links/{{link.code}}">{{link.url}}</a>\
+    template: '<a href="/api/links/{{link.code}}"\
+               ng-click="increaseVisits(data.links[$index])">{{link.url}}</a>\
                <span class="visits-bar" style="width:{{link.visits * 10}}px">{{link.visits}}</span>'
   }
 });
