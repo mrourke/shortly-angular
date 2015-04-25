@@ -1,0 +1,9 @@
+<div id='container'>
+  <h1>LINKS</h1>
+  <a href="#/shorten">create</a>
+  <input type="text" placeholder="Search for a link" ng-model="search">
+  <ul>
+    <li shorten-link ng-repeat="link in data.links | orderBy:'-visits' | filter:search">
+    </li>
+  </ul>
+</div>
